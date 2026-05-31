@@ -18,3 +18,8 @@ It should perform simple CUDA checks and report the results.
 ```
     Cannot get device count: cuda error=35 - CUDA driver version is insufficient for CUDA runtime version
 ```
+
+Run-time :  Error, 
+rc-path :  loc:code
+ <.In-path : o-localized , I - veered ,  Kitnest: Set-load>
+ <.Reply[.with[,AI], parameterized : Generation :  EI -R , C -[BUREAUCRACY]]>
