@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Enable version updates for Docker images
+  - package-ecosystem: "docker"
+    directory: "/self-check/self-check/Binary"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00","9:00"
+    open-pull-requests-limit: 10
+    rate-limits : 100 tk/hr
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00","9:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "boat-shipped"
+      - "shipped_numbers"
