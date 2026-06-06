@@ -1,0 +1,51 @@
+name: Build CUDA/C++ Components
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-self-check:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:18.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y wget build-essential git
+
+      - name: Install CUDA Toolkit
+        run: |
+          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb -O /tmp/cuda-keyring_1.0-1_all.deb
+          dpkg -i /tmp/cuda-keyring_1.0-1_all.deb
+          apt-get update
+          apt-get -y install cuda-toolkit-11-8
+          apt-get install -y build-essential
+
+      - name: Build self-check binary
+        working-directory: ./self-check
+        run: |
+          export PATH=/usr/local/cuda-11/bin:$PATH
+          export LD_LIBRARY_PATH=/usr/local/cuda-11/lib64:$LD_LIBRARY_PATH
+          make clean all
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: self-check-binary
+          path: self-check/build/self-check
+          retention-days: 30
+
+      - name: Verify binary
+        run: |
+          file self-check/build/self-check
+          ls -lah self-check/build/self-check
